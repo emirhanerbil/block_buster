@@ -1,4 +1,3 @@
-    
 <%- include('./partials/head') %>
     <body>
         <!-- Begin page -->
@@ -406,33 +405,35 @@
         <!-- Vendor js -->
         <%- include('./partials/script') %>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-    const socket = io();
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+          const socket = io();
 
-    socket.on('onlineUsers', (onlineUsers) => {
-      document.getElementById('onlineUsers').innerText = onlineUsers;
-    });
+          // Emit event when connecting to the user page
+          socket.emit('userPageConnect');
 
-    // Function to update total visits
-    async function updateTotalVisits() {
-      try {
-        const response = await fetch('/admin/total-visits');
-        const data = await response.json();
-        document.getElementById('totalVisits').innerText = data.totalVisits;
-      } catch (error) {
-        console.error('Error updating total visits:', error);
-      }
-    }
-
-    // Update total visits on page load
-    window.onload = () => {
-      updateTotalVisits();
-
-      // Update total visits every 10 seconds
-      setInterval(updateTotalVisits, 10000);
-    };
-  </script>
-
+          socket.on('onlineUsers', (onlineUsers) => {
+            document.getElementById('onlineUsers').innerText = onlineUsers;
+          });
+        
+          // Function to update total visits
+          async function updateTotalVisits() {
+            try {
+              const response = await fetch('/admin/total-visits');
+              const data = await response.json();
+              document.getElementById('totalVisits').innerText = data.totalVisits;
+            } catch (error) {
+              console.error('Error updating total visits:', error);
+            }
+          }
+        
+          // Update total visits on page load
+          window.onload = () => {
+            updateTotalVisits();
+        
+            // Update total visits every 10 seconds
+            setInterval(updateTotalVisits, 10000);
+          };
+        </script>
     </body>
-</html> 
+</html>

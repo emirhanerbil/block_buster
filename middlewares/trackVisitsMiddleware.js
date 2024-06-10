@@ -12,13 +12,5 @@ const trackVisits = async (req, res, next) => {
   next();
 };
 
-//ip adresi filtrelemesi yapmadan toplam kullanıcı sayısı hesaplama
-// const trackVisits = async (req, res, next) => {
-//     if (req.path.startsWith('/admin')) { // Admin sayfası ziyaretlerini izleme
-//       const userVisit = new UserVisit({ ip: req.ip });
-//       await userVisit.save();
-//     }
-//     next();
-//   };
 
 module.exports = trackVisits;
