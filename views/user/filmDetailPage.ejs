@@ -164,10 +164,10 @@
                                             <div class="movie-item-style-2">
                                               <img src="/<%= relatedFilms[index].posters[0].path.replace(/\\/g, '/') %>"  alt="">
                                               <div class="mv-item-infor">
-                                                <h6><a href="#"><%= relatedFilms[index].title %> <span><%= relatedFilms[index].formattedDate %></span></a></h6>
+                                                <h6><a href="<%= relatedFilms[index].slug %>"><%= relatedFilms[index].title %> <span><%= relatedFilms[index].formattedDate %></span></a></h6>
                                                 <p class="rate"><i class="ion-android-star"></i><span><%= relatedFilms[index].rating %></span> /10</p>
                                                 <p class="describe"><%= relatedFilms[index].description %></p>
-                                                <p>Yönetmen: <a href="#"><%= relatedFilms[index].director %></a></p>
+                                                <p>Yönetmen: <a href=""><%= relatedFilms[index].director %></a></p>
                                                 <p>Oyuncular 
                                                   <% relatedFilms[index].actors.forEach((actor, i) => { %>
                                                     <a href="#"><%= actor %></a><%= i < relatedFilms[index].actors.length - 1 ? ',' : '' %>

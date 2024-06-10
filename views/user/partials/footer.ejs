@@ -33,3 +33,14 @@
 		</div>
 	</div>
 </footer>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+	var socket = io.connect('http://localhost:3000');
+	var onlineUsersDisplay = document.getElementById('onlineUsers');
+
+	socket.on('onlineUsers', function(count) {
+	  onlineUsersDisplay.textContent = count;
+	});
+  });
+</script>

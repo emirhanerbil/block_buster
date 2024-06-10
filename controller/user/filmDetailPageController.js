@@ -26,9 +26,7 @@ exports.filmDetailPage = async (req, res, next) => {
         if (!film) {
             return res.status(404).json({ message: 'Film Bulunamadı' });
         }
-        if (film.slug !== slug) {
-            return res.redirect(`/film/detail/${id}/${film.slug}`);
-          }
+       
 
         film.formattedDate = formatDate(film.releaseDate)
         relatedFilms.forEach(films => {

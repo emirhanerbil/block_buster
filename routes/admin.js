@@ -33,5 +33,6 @@ router.post('/news/delete/:id',newsController.deleteNews);
 
 //online visitors router
 router.get('/total-visits', userVisitController.getTotalVisits);
+router.get('/total-visits', userVisitController.getOnlineUsers);
 
 module.exports = router;

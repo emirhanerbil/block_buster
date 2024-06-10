@@ -1,8 +1,7 @@
-// middlewares/sitemapMiddleware.js
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
-const fs = require('fs');
-const path = require('path');
+const Film = require('../models/filmModel'); // Film modelinizi import edin
+const News = require('../models/newsModel'); // News modelinizi import edin
 
 let sitemap;
 
@@ -16,15 +15,26 @@ const generateSitemap = async (req, res) => {
   }
 
   try {
-    const smStream = new SitemapStream({ hostname: 'http://localhost:3000' });
+    const smStream = new SitemapStream({ hostname: 'http://localhost:3000/' });
     const pipeline = smStream.pipe(createGzip());
 
-    // Add routes here
+    // Statik URL'leri ekleyin
     smStream.write({ url: '/', changefreq: 'daily', priority: 1.0 });
-    smStream.write({ url: 'user/home', changefreq: 'weekly', priority: 0.8 });
-    smStream.write({ url: 'user/films/list', changefreq: 'weekly', priority: 0.8 });
-    smStream.write({ url: 'user/news/list', changefreq: 'weekly', priority: 0.8 });
-    // Add more URLs from your application
+    smStream.write({ url: '/home', changefreq: 'weekly', priority: 0.8 });
+    smStream.write({ url: '/films/list', changefreq: 'weekly', priority: 0.8 });
+    smStream.write({ url: '/news/list', changefreq: 'weekly', priority: 0.8 });
+
+    // Dinamik URL'leri çek ve ekle
+    const filmUrls = await Film.find({}, 'slug').exec();
+    const newsUrls = await News.find({}, 'slug').exec();
+
+    filmUrls.forEach(film => {
+      smStream.write({ url: `/film/detail/${film.slug}`, changefreq: 'weekly', priority: 0.8 });
+    });
+
+    newsUrls.forEach(news => {
+      smStream.write({ url: `/news/detail/${news.slug}`, changefreq: 'weekly', priority: 0.8 });
+    });
 
     smStream.end();
 
