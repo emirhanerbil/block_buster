@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default navbar-custom">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header logo">
+        <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <div id="nav-icon1">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <a href="/user/"><img class="logo" src="/staticUser/images/logo1.png" alt="" width="119" height="58"></a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav flex-child-menu menu-left">
+            <li class="hidden">
+                <a href="#page-top"></a>
+            </li>
+            <li class="dropdown first">
+                <li><a href="/user/home">Ana Sayfa</a></li>
+            </li>
+            <li class="dropdown first">
+                <li><a href="/user/films/list">Filmler</a></li>
+            </li>
+            <li class="dropdown first">
+                <li><a href="/user/news/list">Duyurular</a></li>
+            </li>
+            <% if(roleControl == 'admin'){ %>
+            <li class="dropdown first">
+                <li><a href="/admin/">Admin</a></li>
+            </li>
+            <% } %>
+        </ul>
+        <% if (!tokenControl) { %>
+            <ul class="nav navbar-nav flex-child-menu menu-right">     
+                <li class="loginLink"><a href="/login">Giriş</a></li>
+                <li class="btn signupLink"><a href="/register">Kayıt Ol</a></li>
+            </ul>
+            <% } else { %>
+            <ul class="nav navbar-nav flex-child-menu menu-right">     
+                <li><a href="/logout">Çıkış Yap</a></li>
+            </ul>
+            <% } %>
+    </div>
+<!-- /.navbar-collapse -->
+</nav>

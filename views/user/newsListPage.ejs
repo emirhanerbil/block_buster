@@ -1,0 +1,101 @@
+<%- include('./partials/head') %>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<%- include('./partials/login') %>
+<%- include('./partials/register') %>
+<!-- BEGIN | Header -->
+<header class="ht-header">
+	<div class="container">
+		<%- include('./partials/navbar') %>
+	    <!-- top search form -->
+	</div>
+</header>
+<!-- END | Header -->
+
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Duyuru Listesi</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="/user/home">Ana Sayfa</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> Duyuru Listesi</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- blog list section-->
+<div class="page-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-12 col-xs-12">
+                <% for (let index = 0; index < news.length; index++) { %>
+				<div class="blog-item-style-1 blog-item-style-3">
+            		<img src="/<%= news[index].images[0].path.replace(/\\/g, '/') %>" alt="">
+            		<div class="blog-it-infor">
+            			<h3><a href="/user/news/detail/<%= news[index].slug %> %>"><%= news[index].title %></a></h3>
+            			<span class="time"><%= news[index].formattedDate %></span>
+            			<p><%= news[index].content.length > 150 ? news[index].content.substring(0, 150) + '...' : news[index].content %></p>
+            		</div>
+            	</div>
+                <% } %>
+            	<ul class="pagination">
+					<% if (current > 1) { %>
+						<li class="icon-prev"><a href="?page=<%= current - 1 %>&perPage=<%= perPage %>"><i class="ion-ios-arrow-left"></i></a></li>
+					<% } %>
+					<% for (let i = 1; i <= pages; i++) { %>
+						<li class="<%= current == i ? 'active' : '' %>"><a href="?page=<%= i %>&perPage=<%= perPage %>" class="<%= current == i ? 'active' : '' %>"><%= i %></a></li>
+					<% } %>
+					<% if (current < pages) { %>
+						<li class="icon-next"><a href="?page=<%= current + 1 %>&perPage=<%= perPage %>"><i class="ion-ios-arrow-right"></i></a></li>
+					<% } %>
+            	</ul>
+			</div>
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="sidebar">
+					<div class="sb-search sb-it">
+						<h4 class="sb-title">Search</h4>
+						<form method="GET" action="/user/news/search">
+						  <input type="text" name="search" placeholder="Enter keywords">
+						  
+						</form>
+					  </div>
+					  <div class="sb-cate sb-it">
+						<h4 class="sb-title">Kategoriler</h4>
+						<ul>
+						  <% allTags.slice(0, 5).forEach(tag => { %>
+							<li><a href="/user/news/category/<%= tag %>"><%= tag %></a></li>
+						  <% }) %>
+						</ul>
+					  </div>
+					<div class="sb-recentpost sb-it">
+						<h4 class="sb-title">Son Duyurular</h4>
+						<% for (let index = 0; index < latestNews.length; index++) { %>
+						<div class="recent-item">
+							<span><%= index + 1 %></span><h6><a href="/user/news/detail/<%= latestNews[index].slug %>"><%= latestNews[index].title %></a></h6>
+						</div>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end of blog list section-->
+<!-- footer section-->
+<%- include('./partials/footer') %>
+<!-- end of footer section-->
+<%- include('./partials/script') %>
+</body>
+</html>

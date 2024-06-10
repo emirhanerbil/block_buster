@@ -1,0 +1,109 @@
+
+<%- include('./partials/head') %>
+
+<body>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Topbar Start ========== -->
+        <%- include('./partials/navbar') %>
+        <!-- ========== Topbar End ========== -->
+        
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <%- include('./partials/sidebar') %>
+        <!-- ========== Left Sidebar End ========== -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <%- include('./partials/pageTitle',{pageTitle:"Haberi Güncelle"}) %>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="row g-2">
+                                            <form id="filmForm" action="/admin/news/update/<%= news._id %>" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                                <div class="mb-3">
+                                                    <label for="example-email" class="form-label">Haber Başlığı</label>
+                                                    <input type="text" id="example-email" name="title" class="form-control" placeholder="Haber başlığını giriniz" value="<%= news.title %>">                                  
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="example-textarea" class="form-label">Haber Kategori(leri) (Her bir kategoriyi girdikten sonra "Enter" tuşuna basınız)</label>
+                                                    <textarea class="form-control" id="actors" name="tags"  rows="3"><%= news.tags %></textarea>
+                                                    
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="example-fileinput" class="form-label">Haber Resim(leri)</label>
+                                                    <input type="file" id="example-fileinput" name="files" class="form-control" multiple >
+                                                    
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="example-textarea" class="form-label">Haber İçeriği</label>
+                                                    <textarea name="content" class="form-control" id="example-textarea"  rows="5"><%= news.content %></textarea>
+                                                    
+                                                </div>
+                                                <div class="d-grid gap-2">
+                                                    <button type="submit" class="btn btn-m btn-primary">Güncelle</button>
+                                                </div>
+                                            </form>
+                                        </div> <!-- end col -->                          
+                                    </div>
+                                    <!-- end row-->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card -->
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <!-- Footer Start -->
+            <%- include('./partials/footer') %>
+            <!-- end Footer -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Theme Settings -->
+    <%- include('./partials/themeSettings') %>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const textarea = document.getElementById("actors");
+            
+            textarea.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); // Boşluk tuşunun varsayılan işlevini iptal eder
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+
+                    // "-" ekleyerek mevcut metni güncelle
+                    textarea.value = textarea.value.substring(0, start) + "-" + textarea.value.substring(end);
+
+                    // İmleci yeni konuma taşır
+                    textarea.selectionStart = textarea.selectionEnd = start + 1;
+                }
+            });
+        });
+    </script>
+    <%- include('./partials/script') %>
+</body>
+
+</html>

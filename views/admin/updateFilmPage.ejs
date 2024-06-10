@@ -1,0 +1,158 @@
+
+<%- include('./partials/head') %>
+
+<body>
+    <!-- Begin page -->
+    <div class="wrapper">
+        <!-- ========== Topbar Start ========== -->
+        <%- include('./partials/navbar') %>
+        <!-- ========== Topbar End ========== -->
+        
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <%- include('./partials/sidebar') %>
+        <!-- ========== Left Sidebar End ========== -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <%- include('./partials/pageTitle',{pageTitle:"Film Güncelle"}) %>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="row g-2">
+                                            <form id="filmForm" action="/admin/films/update/<%= film._id %>" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                                <div class="mb-3">
+                                                    <label for="example-email" class="form-label">Film Adı</label>
+                                                    <input type="text" id="example-email" name="title" class="form-control" placeholder="Film adını giriniz" value="<%= film.title %>">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="example-select" class="form-label">Film Türü</label>
+                                                    <select name="genre" class="form-select mb-3">
+                                                        <option disabled value="">Tür Seçiniz</option>
+                                                        <option value="Bilim Kurgu" <%= film.genre === 'Bilim Kurgu' ? 'selected' : '' %>>Bilim Kurgu</option>
+                                                        <option value="Aksiyon" <%= film.genre === 'Aksiyon' ? 'selected' : '' %>>Aksiyon</option>
+                                                        <option value="Komedi" <%= film.genre === 'Komedi' ? 'selected' : '' %>>Komedi</option>
+                                                        <option value="Gerilim" <%= film.genre === 'Gerilim' ? 'selected' : '' %>>Gerilim</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="example-email" class="form-label">Yönetmen</label>
+                                                    <input type="text" id="example-email" name="director" class="form-control" placeholder="Yönetmen adını giriniz" value="<%= film.director %>">
+                                                    
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="example-textarea" class="form-label">Aktörler (Her bir aktörü girdikten sonra "Enter" tuşuna basınız)</label>
+                                                    <textarea class="form-control" id="actors" name="actors"  rows="3"><%= film.actors %></textarea>
+                                                    
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="mb-3 me-3 flex-grow-1">
+                                                      <label for="example-number" class="form-label">IMDB Puanı(1-10)</label>
+                                                      <input class="form-control" id="example-number" type="number" required name="rating" min="1" max="10" step="0.1" value="<%= film.rating %>" >
+                                                      <div class="invalid-feedback">Lütfen 1 ile 10 arasında bir puan giriniz.</div>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input type="checkbox" class="form-check-input" id="customSwitch1" name="isInTheaters" <%= film.isInTheaters ? 'checked' : '' %>>
+                                                        <label class="form-check-label" for="customSwitch1">Film Vizyonda</label>
+                                                      </div>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                    <label for="example-email" class="form-label">Fragman URL</label>
+                                                    <input type="text" id="example-email" name="trailerUrl" class="form-control" placeholder="Fragman URL" value="<%= film.trailerUrl %>"  required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="example-date" class="form-label">Vizyon Tarihi</label>
+                                                    <input class="form-control" id="example-date" type="date" name="releaseDate" value="<%= film.releaseDate ? film.releaseDate.toISOString().split('T')[0] : '' %>">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="example-fileinput" class="form-label">Film Posterleri</label>
+                                                    <input type="file" id="example-fileinput" name="files" class="form-control" multiple>                                                  
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="example-textarea" class="form-label">Açıklama</label>
+                                                    <textarea name="description" class="form-control" id="example-textarea"  rows="5"><%= film.description %></textarea>
+                                                    
+                                                </div>
+                                                <div class="d-grid gap-2">
+                                                    <button type="submit" class="btn btn-m btn-primary">Güncelle</button>
+                                                </div>
+                                            </form>
+                                        </div> <!-- end col -->                          
+                                    </div>
+                                    <!-- end row-->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card -->
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <!-- Footer Start -->
+            <%- include('./partials/footer') %>
+            <!-- end Footer -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Theme Settings -->
+    <%- include('./partials/themeSettings') %>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // `textarea` elemanını seçin
+            var actorsTextarea = document.getElementById("actors");
+
+            // `textarea` içeriğini alın
+            var actors = actorsTextarea.value;
+
+            // Virgülleri "-" ile değiştirin
+            var actorsWithDash = actors.split(',').join(' - ');
+
+            // Yeni değeri `textarea` içine koyun
+            actorsTextarea.value = actorsWithDash;
+        });
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const textarea = document.getElementById("actors");
+            
+            textarea.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault(); // Boşluk tuşunun varsayılan işlevini iptal eder
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+
+                    // "-" ekleyerek mevcut metni güncelle
+                    textarea.value = textarea.value.substring(0, start) + "-" + textarea.value.substring(end);
+
+                    // İmleci yeni konuma taşır
+                    textarea.selectionStart = textarea.selectionEnd = start + 1;
+                }
+            });
+        });
+    </script>
+    <%- include('./partials/script') %>
+</body>
+
+</html>

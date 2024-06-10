@@ -1,0 +1,195 @@
+<%- include('./partials/head') %>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<%- include('./partials/login') %>
+<%- include('./partials/register') %>
+
+<!-- BEGIN | Header -->
+<header class="ht-header">
+	<div class="container">
+		<%- include('./partials/navbar') %>
+	    <!-- top search form -->
+	</div>
+</header>
+<!-- END | Header -->
+
+<div class="hero mv-single-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- <h1> movie listing - list</h1>
+				<ul class="breadcumb">
+					<li class="active"><a href="#">Home</a></li>
+					<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+				</ul> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single movie-single movie_single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<div class="movie-img sticky-sb">
+					<img src="/<%= film.posters[0].path.replace(/\\/g, '/') %>" alt="">
+					<div class="movie-btn">	
+						<div class="btn-transform transform-vertical red">
+							<div><a href="#" class="item item-1 redbtn"> <i class="ion-play"></i> Fragmana Git</a></div>
+							<div><a href="<%= film.trailerUrl %>" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 col-sm-12 col-xs-12">
+				<div class="movie-single-ct main-content">
+					<h1 class="bd-hd"><%= film.title %> <span><%= film.formattedDate %></span></h1>
+					<div class="movie-rate">
+						<div class="rate">
+							<i class="ion-android-star"></i>
+							<p><span><%= film.rating %></span> /10<br>
+								<span class="rv">56 Reviews</span>
+							</p>
+						</div>
+						<div class="rate-star">
+							<p>Filmi Puanla </p>
+							<% for (var i = 1; i <= 10; i++) { %>
+								<% if (i <= film.rating) { %>
+									<i class="ion-ios-star"></i>
+								<% } else { %>
+									<i class="ion-ios-star-outline"></i>
+								<% } %>
+							<% } %>
+						</div>
+					</div>
+					<div class="movie-tabs">
+						<div class="tabs">
+							<ul class="tab-links tabs-mv">
+								<li class="active"><a href="#overview">Genel Bakış</a></li>
+								<li><a href="#cast">  Ekip & Oyuncular </a></li>		 
+								<li><a href="#moviesrelated"> Benzer Filmler</a></li>                        
+							</ul>
+						    <div class="tab-content">
+						        <div id="overview" class="tab active">
+						            <div class="row">
+						            	<div class="col-md-8 col-sm-12 col-xs-12">
+						            		<p><%= film.description %></p>
+						            		<div class="title-hd-sm">
+												<h4>Fotoğraflar</h4>												
+											</div>
+											<div class="mvsingle-item ov-item">
+                                                <% film.posters.forEach(poster => { %>
+												<a class="img-lightbox"  data-fancybox-group="gallery" href="/<%= poster.path.replace(/\\/g, '/') %>" ><img src="/<%= poster.path.replace(/\\/g, '/') %>" alt=""></a>
+                                                <% }); %>
+											</div>
+						            	</div>
+						            	<div class="col-md-4 col-xs-12 col-sm-12">
+						            		<div class="sb-it">
+						            			<h6>Yönetmen </h6>
+						            			<p><a href="#"><%= film.director %></a></p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Oyuncular </h6>
+						            			<p>
+                                                    <% film.actors.forEach((actor, index) => { %>
+                                                      <a href="#"><%= actor %></a><%= index < film.actors.length - 1 ? ',' : '' %>
+                                                    <% }); %>
+                                                  </p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Tür</h6>
+						            			<p><a href="#"><%= film.genre %></a></p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Yayınlanma Tarihi</h6>
+						            			<p><%= film.formattedDate %></p>
+						            		</div>            		
+						            	</div>
+						            </div>
+						        </div>
+						        
+						        <div id="cast" class="tab">
+						        	<div class="row">
+						            	<h3>Oyuncular ve Ekip</h3>
+					       	 			<h2><%= film.title %></h2>
+										<!-- //== -->
+					       	 			<div class="title-hd-sm">
+											<h4>Yönetmen/Yazar</h4>
+										</div>
+										<div class="mvcast-item">											
+											<div class="cast-it">
+												<div class="cast-left">
+													<h4><%= film.director.slice(0, 2) %></h4>
+													<a href="#"><%= film.director %></a>
+												</div>
+												<p>Yönetmen</p>
+											</div>
+										</div>
+										<!-- //== -->
+										<div class="title-hd-sm">
+											<h4>Oyuncular</h4>
+										</div>
+										<% film.actors.forEach(function(actor) { %>
+										<div class="mvcast-item">
+											
+												<div class="cast-it">
+													<div class="cast-left">
+														<h4><%= actor.slice(0, 2) %></h4>
+														<a href="#"><%= actor %></a>
+													</div>
+													<p>Oyuncu</p>
+												</div>
+																	
+										</div>
+										<% }) %>	
+										
+										
+						            </div>
+					       	 	</div>
+					       	 	
+					       	 	<div id="moviesrelated" class="tab">
+					       	 		<div class="row">
+					       	 			<h3>Benzer Filmler</h3>
+					       	 			<h2><%= film.title %></h2>
+					       	 			<div class="topbar-filter">											
+										</div>
+                                        <% for (let index = 0; index < relatedFilms.length; index++) { %>
+                                            <div class="movie-item-style-2">
+                                              <img src="/<%= relatedFilms[index].posters[0].path.replace(/\\/g, '/') %>"  alt="">
+                                              <div class="mv-item-infor">
+                                                <h6><a href="#"><%= relatedFilms[index].title %> <span><%= relatedFilms[index].formattedDate %></span></a></h6>
+                                                <p class="rate"><i class="ion-android-star"></i><span><%= relatedFilms[index].rating %></span> /10</p>
+                                                <p class="describe"><%= relatedFilms[index].description %></p>
+                                                <p>Yönetmen: <a href="#"><%= relatedFilms[index].director %></a></p>
+                                                <p>Oyuncular 
+                                                  <% relatedFilms[index].actors.forEach((actor, i) => { %>
+                                                    <a href="#"><%= actor %></a><%= i < relatedFilms[index].actors.length - 1 ? ',' : '' %>
+                                                  <% }); %>
+                                                </p>
+                                              </div>
+                                            </div>
+                                          <% } %>
+					       	 		</div>
+					       	 	</div>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- footer section-->
+<%- include('./partials/footer') %>
+<!-- end of footer section-->
+<%- include('./partials/script') %>
+<!-- end of footer section-->
+</body>
+</html>

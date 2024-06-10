@@ -1,0 +1,35 @@
+
+<%- include('./partials/head') %>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+
+<!--end of login form popup-->
+<!--signup form popup-->
+<%- include('./partials/login') %>
+<%- include('./partials/register') %>
+<!--end of signup form popup-->
+
+<div class="page-single-2">
+	<div class="container">
+		<div class="row">
+			<div class="middle-content">
+				<a href="/user/home"><img class="md-logo" src="/staticUser/images/logo1.png" alt=""></a>
+				<img src="/staticUser/custom images/404_2.png" alt="">
+				<h1>Sayfa Bulunamadı</h1>
+				<a href="/user/home" class="redbtn">Eve Dön</a>
+			</div>
+		</div>
+	</div>
+</div>
+<%- include('./partials/script') %>
+</body>
+</html>

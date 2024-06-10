@@ -1,0 +1,239 @@
+<%- include('./partials/head') %>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/staticUser/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+<%- include('./partials/login') %>
+<%- include('./partials/register') %>
+<!--end of signup form popup-->
+
+<!-- BEGIN | Header -->
+<header class="ht-header">
+	<div class="container">
+	    <%- include('./partials/navbar') %>
+	    <!-- top search form -->
+	</div>
+</header>
+<!-- END | Header -->
+
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+	    	<div  class="slick-multiItemSlider">
+				<% for( let index = 0; index < films.length; index++ ) { %>
+	    		<div class="movie-item">
+	    			<div class="mv-img">
+	    				<a href="/user/film/detail/<%= films[index].slug %>"><img src="/<%= films[index].posters[0].path.replace(/\\/g, '/') %>" alt="" style="width: 300px; height: 300px; object-fit: cover;">
+						</a>
+	    			</div>
+	    			<div class="title-in">						
+	    				<div class="cate">							
+	    					<span class="blue"><a href="/user/film/detail/<%= films[index].slug %>"><%= films[index].genre %></a></span>							
+	    				</div>
+	    				<h6><a href="/user/film/detail/<%= films[index].slug %>"><%= films[index].title %></a></h6>
+	    				<p><i class="ion-android-star"></i><span><%= films[index].rating %></span> /10</p>
+	    			</div>
+	    		</div>
+				<% } %>
+	    	</div>
+	    </div>
+	</div>
+</div>
+<div class="movie-items">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="title-hd">
+					<h2>Vizyondakiler</h2>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links">
+						<li class="active"><a href="#tab1">#Vizyon</a></li>                   
+					</ul>					
+				    <div class="tab-content">
+				        <div id="tab1" class="tab active">
+				            <div class="row">
+				            	<div class="slick-multiItem">
+									<% for( let index = 0; index < filmsInTheaters.length; index++ ) { %>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/<%= filmsInTheaters[index].posters[0].path.replace(/\\/g, '/') %>" alt="" style="width: 300px; height: 300px; object-fit: cover;">
+					            			</div> 
+					            			<div class="hvr-inner">
+					            				<a  href="/user/film/detail/<%= filmsInTheaters[index].slug %>"> Filme Git <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="/user/film/detail/<%= filmsInTheaters[index].slug %>"><%= filmsInTheaters[index].title %></a></h6>
+					            				<p><i class="ion-android-star"></i><span><%= filmsInTheaters[index].rating %></span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>	
+									<% } %>
+				            	</div>
+				            </div>
+				        </div>
+				    </div>
+					
+				</div>
+				<div class="title-hd">
+					<h2>Popüler</h2>		
+				</div>
+				<div class="tabs">
+					<ul class="tab-links-2">
+						<li class="active"><a href="#tab21">#Popüler</a></li>					                      
+					</ul>			
+				    <div class="tab-content">
+				        <div id="tab21" class="tab active">
+				            <div class="row">
+				            	<div class="slick-multiItem">
+									<% for( let index = 0; index < topRatedFilms.length; index++ ) { %>
+				            		<div class="slide-it">
+										
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/<%= topRatedFilms[index].posters[0].path.replace(/\\/g, '/') %>" alt="" style="width: 300px; height: 300px; object-fit: cover;">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="/user/film/detail/<%= topRatedFilms[index].slug %>"> Filme Git <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="/user/film/detail/<%= topRatedFilms[index].slug %>"><%= topRatedFilms[index].title %></a></h6>
+					            				<p><i class="ion-android-star"></i><span><%= topRatedFilms[index].rating %></span> /10</p>
+					            			</div>
+					            		</div>		
+				            		</div>
+									<% } %>
+				            	</div>
+				            </div>
+				        </div>
+				    </div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="trailers">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-12">
+				<div class="title-hd">
+					<h2>Fragmanlar</h2>
+				</div>
+				<div class="videos">
+					<div class="slider-for-2 video-ft">
+						<% for (let index = 0; index < films.length; index++) { %>
+						  <% if (films[index].embedUrl) { %>
+							<div>
+							  <iframe width="560" height="315" 
+									  src="<%= films[index].embedUrl %>" 
+									  title="YouTube video player" 
+									  frameborder="0" 
+									  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+									  referrerpolicy="strict-origin-when-cross-origin" 
+									  allowfullscreen>
+							  </iframe>
+							</div>  
+						  <% } %>
+						<% } %>						  
+					  </div>
+					<div class="slider-nav-2 thumb-ft"> 
+						<% for (let index = 0; index < films.length; index++) { %>
+							<% if (films[index].thumbnailUrl) { %>
+								<div class="item">
+									<div class="trailer-img">
+										<img src="<%= films[index].thumbnailUrl %>"  alt="photo by Barn Images" width="4096" height="2737">
+									</div>
+									<div class="trailer-infor">
+										<h4 class="desc"><%= films[index].title %></h4>
+										<p><%= films[index].duration %></p>
+									</div>
+								</div>			
+								<% } %>
+						<% } %>	
+					</div>
+				</div>   
+			</div>
+		</div>
+	</div>
+</div>
+<div class="latestnew">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="ads">
+					<img src="/staticUser/custom images/banner1.jpg" alt="" width="728" height="106">
+				</div>
+				<div class="title-hd">
+					<h2>Son Duyurular</h2>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links-3">
+						<li class="active"><a href="#tab31">#Movies </a></li>
+						<li><a href="#tab32"> #TV Shows </a></li>              
+						<li><a href="#tab33">  # Celebs</a></li>                       
+					</ul>
+				    <div class="tab-content">
+				        <div id="tab31" class="tab active">
+				            <div class="row">
+				            	<div class="blog-item-style-1">
+				            		<img src="/<%= latestNews[0].images[0].path.replace(/\\/g, '/') %>" alt="" width="170" height="250">
+				            		<div class="blog-it-infor">
+				            			<h3><a href="/user/news/detail/<%= latestNews[0].slug %>"><%= latestNews[0].title %></a></h3>
+				            			<span class="time"><%= latestNews[0].formattedDate %></span>
+				            			<p><%= latestNews[0].content %></p>
+				            		</div>
+				            	</div>							
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="morenew">
+					<div class="title-hd">
+						<h3>Daha Fazla Duyuru</h3>
+						<a href="/user/news/list" class="viewall">Tüm Duyuruları Gör<i class="ion-ios-arrow-right"></i></a>
+					</div>
+					<div class="more-items">
+						<div class="left">
+							<% for (let index = 1; index < latestNews.length; index++) { %>
+								<% if (index < 2) { %>
+									<div class="more-it">
+										<h6><a href="/user/news/detail/<%= latestNews[index].slug %>"><%= latestNews[index].title %></a></h6>
+										<span class="time"><%= latestNews[index].formattedDate %></span>
+									  </div>
+							 	<% } %>
+							 <% } %>
+						</div>
+						<div class="right">
+							<% for (let index = 1; index < latestNews.length; index++) { %>
+								<% if (index >= 2) { %>
+									<div class="more-it">
+										<h6><a href="/user/news/detail/<%= latestNews[index].slug %>"><%= latestNews[index].title %></a></h6>
+										<span class="time"><%= latestNews[index].formattedDate %></span>
+									  </div>
+									<% } %>
+								  <% } %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end of latest new v1 section-->
+<!-- footer section-->
+<%- include('./partials/footer') %>
+<!-- end of footer section-->
+<%- include('./partials/script') %>
+
+</body>
+</html>

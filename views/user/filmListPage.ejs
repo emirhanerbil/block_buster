@@ -1,0 +1,152 @@
+<%- include('./partials/head') %>
+<body>
+  <!--preloading-->
+  <div id="preloader">
+      <img class="logo" src="/staticUser/images/logo1.png" alt="" width="119" height="58">
+      <div id="status">
+          <span></span>
+          <span></span>
+      </div>
+  </div>
+  <!--end of preloading-->
+  <!--login form popup-->
+  <%- include('./partials/login') %>
+  <%- include('./partials/register') %>
+  
+  <!-- BEGIN | Header -->
+  <header class="ht-header">
+    <div class="container">
+      <%- include('./partials/navbar') %>
+        <!-- top search form -->
+    </div>
+  </header>
+  <!-- END | Header -->
+  
+  <div class="hero common-hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="hero-ct">
+            <h1> Film Listesi</h1>
+            <ul class="breadcumb">
+              <li class="active"><a href="#">Ana Sayfa</a></li>
+              <li> <span class="ion-ios-arrow-right"></span> Film Listesi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-single movie_list">
+    <div class="container">
+      <div class="row ipad-width2">
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="topbar-filter">
+            <p>Toplamda <span><%= totalFilms %> film</span> bulundu</p>
+            <label>Sort by:</label>
+            <select>
+              <option value="popularity">Popularity Descending</option>
+              <option value="popularity">Popularity Ascending</option>
+              <option value="rating">Rating Descending</option>
+              <option value="rating">Rating Ascending</option>
+              <option value="date">Release date Descending</option>
+              <option value="date">Release date Ascending</option>
+            </select>
+            <a href="movielist.html" class="list"><i class="ion-ios-list-outline active"></i></a>
+            <a  href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
+          </div>
+                  <% for (let index = 0; index < films.length; index++) { %>
+                      <div class="movie-item-style-2">
+                        <span></span>
+                        <span></span>
+                        <img src="/<%= films[index].posters[0].path.replace(/\\/g, '/') %>" alt="">
+                        <div class="mv-item-infor">
+                          <h6><a href="/user/film/detail/<%=films[index].slug %>"><%= films[index].title %> <span><%= films[index].formattedDate %></span></a></h6>
+                          <p class="rate"><i class="ion-android-star"></i><span><%= films[index].rating %></span> /10</p>
+                          <p class="describe"><%= films[index].description %></p>
+                          <p>Yönetmen: <a href="#"><%= films[index].director %></a></p>
+                          <p>Başroller 
+                            <% films[index].actors.forEach((actor, i) => { %>
+                              <a href="#"><%= actor %></a><%= i < films[index].actors.length - 1 ? ',' : '' %>
+                            <% }); %>
+                          </p>
+                        </div>
+                      </div>
+                    <% } %>
+                    <div class="topbar-filter">
+                      <label>Sayfa başına gösterilecek film sayısı</label>
+                      <select id="moviesPerPage" onchange="changePerPage()">
+                        <option value="5" <%= perPage == 5 ? 'selected' : '' %>>5 Movies</option>
+                        <option value="10" <%= perPage == 10 ? 'selected' : '' %>>10 Movies</option>
+                      </select>
+                      <div class="pagination2">
+                        <span>Sayfa <%= current %> of <%= pages %>:</span>
+                        <% if (current > 1) { %>
+                          <a href="?page=<%= current - 1 %>&perPage=<%= perPage %>"><i class="ion-arrow-left-b"></i></a>
+                        <% } %>
+                        <% for (let i = 1; i <= pages; i++) { %>
+                          <a href="?page=<%= i %>&perPage=<%= perPage %>" class="<%= current == i ? 'active' : '' %>"><%= i %></a>
+                        <% } %>
+                        <% if (current < pages) { %>
+                          <a href="?page=<%= current + 1 %>&perPage=<%= perPage %>"><i class="ion-arrow-right-b"></i></a>
+                        <% } %>
+                      </div>
+                    </div>                   
+                  </div>
+                  <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="sidebar">
+                      <div class="searh-form">
+                        <h4 class="sb-title">Film Ara</h4>
+                        <form class="form-style-1" action="/user/films/search" method="GET">
+                          <div class="row">
+                            <div class="col-md-12 form-it">
+                              <label>Film Adı</label>
+                              <input type="text" name="search" placeholder="Film adını giriniz">
+                            </div>
+                            <div class="col-md-12 form-it">
+                              <label>Türler</label>
+                              <div class="group-ip">
+                                <select name="genres" multiple class="ui fluid dropdown">
+                                  <option value="">Film Türünü Seçiniz</option>
+                                  <option value="Bilim Kurgu">Bilim Kurgu</option>
+                                  <option value="Aksiyon">Aksiyon</option>
+                                  <option value="Komedi">Komedi</option>
+                                  <option value="Gerilim">Gerilim</option>                               
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-12 form-it">
+                              <label>IMDB Puan Aralığı</label>
+                              <select name="ratingRange">
+                                <option value="1-5">-- 1-5 --</option>
+                                <option value="5-7">-- 5-7 --</option>
+                                <option value="7-9">-- 7-9 --</option>
+                                <option value="9-10">-- 9-10 --</option>
+                              </select>
+                            </div>
+                            <div class="col-md-12">
+                              <input class="submit" type="submit" value="Ara">
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+<!-- footer section-->
+<%- include('./partials/footer') %>
+<!-- end of footer section-->
+<script>
+    function changePerPage() {
+      const perPage = document.getElementById('moviesPerPage').value;
+      window.location.href = `?page=1&perPage=${perPage}`;
+    }
+  </script>
+<%- include('./partials/script') %>
+<!-- end of footer section-->
+</body>
+</html>
